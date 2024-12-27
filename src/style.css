@@ -106,9 +106,14 @@ gap: 5px;
 }
 .added {
     background-color: hsl(14, 86%, 42%);
-   
+    display: none;
+justify-content: center;
+align-items: center;
+padding: 5px 10px;
+border-radius: 25px;
+
 }
-.product__container-icon p {
+.quantity {
     color: #fff;
     margin-left: 20px;
     margin-right: 20px;
