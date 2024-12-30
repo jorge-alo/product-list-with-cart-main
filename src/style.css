@@ -128,3 +128,37 @@ border-radius: 25px;
     border: 1px solid #ccc;
     border-radius: 50%;
 }
+.section-cart__product {
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 10px;
+}
+.section-cart__product h3 {
+    font-size: .8rem;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+.cant {
+    font-size: .7rem;
+    color: hsl(14, 86%, 42%);
+    margin-right: 10px;
+}
+
+.product-price {
+    font-size: .7rem;
+    color: #999;
+}
+.total-price {
+    font-size: .7rem;
+    color: #666;
+}
+
+.section-cart__product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.icono-remove {
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    
+}

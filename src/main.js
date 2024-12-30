@@ -1,8 +1,10 @@
 
 const Containerproductos = document.querySelector(".container-productos");
 
+
+
 const Agregarproductos = async () => {
-   
+
     try {
         const response = await fetch('./data.json');
         const products = await response.json();
@@ -14,7 +16,7 @@ const Agregarproductos = async () => {
 }
 
 const renderProducts = (products) => {
-    
+
     products.forEach((product, index) => {
         const productElement = document.createElement("div");
         productElement.classList.add("product");
@@ -52,69 +54,157 @@ const renderProducts = (products) => {
         `
         Containerproductos.appendChild(productElement);
     });
-    handleAddToCart()
+    handleAddToCart(products)
 }
 
-const handleAddToCart = () => {
+const handleAddToCart = (products) => {
     const buttonsAddToCart = document.querySelectorAll(".add-to-cart");
-    const buttonsAdded = document.querySelectorAll(".added")
-    console.log(buttonsAdded)
+    const buttonsAdded = document.querySelectorAll(".added");
 
     buttonsAddToCart.forEach((button) => {
         // Aseguramos que no haya duplicados de eventos
         button.onclick = null;
 
         button.addEventListener("click", () => {
-           button.style.display = "none"
+            button.style.display = "none"
             buttonsAdded.forEach((buttonAdded) => {
-                if(button.id == buttonAdded.id){
-                    console.log(buttonAdded)
+                if (button.id == buttonAdded.id) {
                     buttonAdded.style.display = "flex"
-                   
-                    handleIncrementDecrement(buttonAdded, button);
+
+                    handleIncrementDecrement(buttonAdded, button, products);
+
                 }
             })
-               
-            
+
+
         });
     });
 };
 
+const handleCarts = (products, quantityElement, buttonAdded) => {
+    if (!buttonAdded || !buttonAdded.id) {
+        console.error("buttonAdded no es válido o no tiene un 'id'");
+        return;
+    }
 
-const handleIncrementDecrement = (buttonAdded, button) => {
+    const sectionCartTitle = document.querySelector(".section-cart__title");
+    const sectionCartContainerEmpty = document.querySelector(".section-cart__container-empty");
+    const items = document.querySelector(".section-cart__container-items");
+
+    let array = [];
+    sectionCartContainerEmpty.style.display = "none";
+
+    // Añadir el producto al array si no existe
+    products.forEach((product, index) => {
+        if (buttonAdded.id == index) {
+            const productExists = array.some(item => item.name === product.name);
+            if (!productExists) {
+                array = [...array, product];
+            }
+        }
+    });
+
+    array.forEach((product) => {
+        const existingProduct = document.querySelector(`.section-cart__product[data-id="${product.name}"]`);
+
+        if (existingProduct) {
+            const cantProductElement = existingProduct.querySelector(".cant");
+            const totalPrice = existingProduct.querySelector(".total-price");
+
+            let currentQuantity = parseInt(cantProductElement.textContent, 10);
+
+            if (parseInt(quantityElement, 10) === 0) {
+                currentQuantity -= 1;
+
+                if (currentQuantity <= 0) {
+                    // Eliminar del carrito y del DOM si la cantidad es <= 0
+                    array = array.filter(item => item.name !== product.name);
+                    existingProduct.remove();
+                } else {
+                    // Actualizar cantidad y precio
+                    cantProductElement.textContent = currentQuantity;
+                    totalPrice.textContent = (currentQuantity * parseFloat(product.price)).toFixed(2);
+                }
+            } else {
+                // Actualizar cantidad y precio si se incrementa la cantidad
+                cantProductElement.textContent = quantityElement;
+                totalPrice.textContent = (parseInt(quantityElement, 10) * parseFloat(product.price)).toFixed(2);
+            }
+        } else {
+            // Crear nuevo producto si no existe
+            const itemProduct = document.createElement("DIV");
+            itemProduct.classList.add("section-cart__product");
+            itemProduct.setAttribute("data-id", product.name);
+
+            itemProduct.innerHTML = `
+                <div class="section-cart__product__container">
+                <h3>${product.name}</h3>
+                <span class="cant">${quantityElement}x</span>
+                <span class="product-price">@ ${product.price.toFixed(2)}</span>
+                <span class="total-price">${(parseInt(quantityElement, 10) * parseFloat(product.price)).toFixed(2)}</span>
+                </div>
+                <svg class="icono-remove" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path fill="#CAAFA7" d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"/></svg>
+                `;
+
+            items.appendChild(itemProduct);
+        }
+    });
+
+    // Actualizar título del carrito
+    const totalItems = Array.from(document.querySelectorAll(".section-cart__product .cant"))
+        .reduce((acc, span) => acc + parseInt(span.textContent, 10), 0);
+
+    sectionCartTitle.textContent = `Your Cart (${totalItems})`;
+
+    // Mostrar contenedor vacío si no hay productos
+    if (totalItems === 0) {
+        sectionCartContainerEmpty.style.display = "block";
+        items.style.display = "none";
+    } else {
+        items.style.display = "block";
+    }
+};
+
+
+const handleIncrementDecrement = (buttonAdded, button, products) => {
     const incrementButton = buttonAdded.querySelector(".increment");
     const decrementButton = buttonAdded.querySelector(".decrement");
     const quantityElement = buttonAdded.querySelector(".quantity");
 
     // Restablecer la cantidad a 1 cuando se muestra el botón "Añadido"
-    quantityElement.textContent = "1"; // Siempre que se muestra el botón de "Añadido", la cantidad comienza desde 1
-    console.log(quantityElement.textContent)
-    // Eliminar eventos previos para evitar duplicados
-    incrementButton.removeEventListener("click", incrementEvent);
-    decrementButton.removeEventListener("click", decrementEvent);
+    quantityElement.textContent = "1";
+    handleCarts(products, quantityElement.textContent, buttonAdded);
+    // Remover cualquier evento previo para evitar duplicados
+    incrementButton.replaceWith(incrementButton.cloneNode(true));
+    decrementButton.replaceWith(decrementButton.cloneNode(true));
+
+    const newIncrementButton = buttonAdded.querySelector(".increment");
+    const newDecrementButton = buttonAdded.querySelector(".decrement");
 
     // Definir los eventos de incremento y decremento
     function incrementEvent() {
         let quantity = parseInt(quantityElement.textContent, 10);
         quantityElement.textContent = quantity + 1; // Incrementar la cantidad
-        console.log(quantityElement.textContent)
+        handleCarts(products, quantityElement.textContent, buttonAdded)
     }
 
     function decrementEvent() {
         let quantity = parseInt(quantityElement.textContent, 10);
         if (quantity > 1) {
             quantityElement.textContent = quantity - 1; // Decrementar la cantidad
+            handleCarts(products, quantityElement.textContent, buttonAdded)
         } else if (quantity === 1) {
             // Cuando la cantidad es 1 y se decrece, restablecemos los botones
-            buttonAdded.style.display = "none"; 
-            button.style.display = "flex"; 
+            buttonAdded.style.display = "none";
+            button.style.display = "flex";
             quantityElement.textContent = "1";
+            handleCarts(products, 0, buttonAdded)
         }
     }
 
     // Agregar los nuevos eventos
-    incrementButton.addEventListener("click",  incrementEvent);
-    decrementButton.addEventListener("click", decrementEvent);
+    newIncrementButton.addEventListener("click", incrementEvent);
+    newDecrementButton.addEventListener("click", decrementEvent);
 };
 
 
