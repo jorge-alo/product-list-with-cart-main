@@ -5,7 +5,7 @@ const Containerproductos = document.querySelector(".container-productos");
 
 export const  Agregarproductos = async () => {
     try {
-        const response = await fetch('./data.json');
+        const response = await fetch('data.json');
         const products = await response.json();        
         renderProducts(products);        
     } catch (error) {
