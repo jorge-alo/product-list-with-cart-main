@@ -13,6 +13,10 @@
         });
 
         const pTotal = document.querySelector(".pTotal");
+        if(pTotal == null){
+            sectionCartTitle.textContent = `Your Cart (0)`;
+            return
+        }
         pTotal.textContent = `$${total.toFixed(2)}`;
 
         // Actualizar título del carrito

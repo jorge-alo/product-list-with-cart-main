@@ -8,7 +8,7 @@ body {
     justify-content: center;
     font-family: sans-serif;
     padding: 20px;
-    background-color: #efefef;
+    background-color: hsl(20, 50%, 98%);
     gap: 20px;
 }
 
@@ -140,9 +140,13 @@ border-radius: 25px;
 .cant {
     font-size: .7rem;
     color: hsl(14, 86%, 42%);
+    
+}
+.x {
+    font-size: .7rem;
+    color: hsl(14, 86%, 42%);
     margin-right: 10px;
 }
-
 .product-price {
     font-size: .7rem;
     color: #999;
@@ -217,25 +221,51 @@ border-radius: 25px;
 
 .container-confirm {
     background-color: #fff;
-    width: clamp(250px, 40%, 300px);
+    width: clamp(250px, 40%, 400px);
     padding: 20px;
-   
+    border-radius: 8px;
 }
-.container-confirm__container-datos {
-    display: flex;
-    gap: 10px;
-    background-color: #efefef;
-    padding: 10px;
+.container-confirm h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
 }
-.container-confirm__datos h3 {
-    font-size: .7rem;
+.container-confirm p {
+    font-size: clamp(.6rem,2.2vw,.8rem);
+    color: hsl(14, 25%, 72%);
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .container-confirm__datos {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
+    background-color: hsl(20, 50%, 98%);
+    border-bottom: 1px solid hsl(13, 31%, 94%);
+    border-radius: 8px;
+   padding: 10px;
 }
+.container-confirm__container-datos {
+    display: flex;
+    width: 100%;
+   justify-content: space-between;
+   align-items: center;
+   padding-left: 10px;
+}
+.container-datos__datos {
+   
+  
+    
+    
+}
+.container-datos__cantyprice {
+  
+   padding-bottom: 10px;
+}
+.container-confirm__datos h3 {
+    font-size: .7rem;
+    margin-bottom: 5px;
+}
+
 .container-confirm__container-img {
     width: 40px;
     height: 40px;
@@ -244,4 +274,14 @@ border-radius: 25px;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.container-confirm__button {
+    background-color: hsl(14, 86%, 42%);
+    border: none;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 50px;
+    color: #ccc;
+    width: 100%;
 }
