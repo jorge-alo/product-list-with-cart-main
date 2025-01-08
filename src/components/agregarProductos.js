@@ -20,7 +20,7 @@ const renderProducts = (products) => {
         productElement.classList.add("product");
         productElement.innerHTML = `
         <div class="product__container-img">
-            <img class="product-img" src="${product.image.thumbnail}" alt="${product.name}">
+            <img class="product-img" src="${product.image.thumbnail}" name=${product.name} alt="${product.name}">
             <div class="container-button">
                 <button class="add-to-cart" id="${index}">
                    
@@ -34,7 +34,7 @@ const renderProducts = (products) => {
                 <div class="added" id="${index}">
                     
                         <svg class="decrement" xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2">
-                            <path fill="#fff" d="M0 .375h10v1.25H0V.375Z"/>
+                            <path class="pathDecrement" fill="#fff" d="M0 .375h10v1.25H0V.375Z"/>
                         </svg>
                         <span class="quantity">1</span>
                         <svg class="increment" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">

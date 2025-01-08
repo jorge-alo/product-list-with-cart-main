@@ -35,8 +35,8 @@ width: 100%;
 height: 100%;
 margin-bottom: 20px;
 border-radius: 8px;
-
 }
+
 .product p {
     font-size: clamp(.7rem, 2.2vw, .8rem) ;
     color: #666;
@@ -68,7 +68,10 @@ border: 1px solid #ccc;
 background-color: #fff;
 gap: 5px;
 }
-
+.add-to-cart:hover {
+    border: 1px solid hsl(14, 86%, 42%);
+    color: hsl(14, 86%, 42%);
+}
 .product__container-icon {
     display: flex;
     justify-content: center;
@@ -118,15 +121,34 @@ border-radius: 25px;
     margin-left: 20px;
     margin-right: 20px;
 }
-.decrement {
-    border: 1px solid #ccc;
-    border-radius: 50%;
-   height: 10px;
-   
-}
+.decrement,
 .increment {
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 50%;
+    width: 15px; /* Ajusta el tamaño si es necesario */
+    height: 15px;
+    padding: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent; /* Fondo inicial blanco */
+    cursor: pointer;
+}
+
+.decrement:hover,
+.increment:hover {
+    background-color: #fff; /* Fondo blanco al hacer hover */
+}
+
+.decrement path,
+.increment path {
+    fill: #fff; /* Color inicial blanco del signo */
+    
+}
+
+.decrement:hover path,
+.increment:hover path {
+    fill: hsl(14, 86%, 42%); /* Cambia el color del signo al hacer hover */
 }
 .section-cart__product {
     border-bottom: 1px solid #efefef;
@@ -206,6 +228,9 @@ border-radius: 25px;
     color: #ccc;
     width: 100%;
 }
+.container-total__button:hover {
+    background-color: hsl(14, 75%, 30%);
+}
 
 .wrapper {
     position: absolute;
@@ -251,14 +276,8 @@ border-radius: 25px;
    align-items: center;
    padding-left: 10px;
 }
-.container-datos__datos {
-   
-  
-    
-    
-}
+
 .container-datos__cantyprice {
-  
    padding-bottom: 10px;
 }
 .container-confirm__datos h3 {

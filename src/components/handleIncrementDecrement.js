@@ -1,12 +1,13 @@
 import { handleCarts } from "./handleCarts";
 
-export const handleIncrementDecrement = (buttonAdded, button, products) => {
+export const handleIncrementDecrement = (buttonAdded, button, products,productImg) => {
     const incrementButton = buttonAdded.querySelector(".increment");
     const decrementButton = buttonAdded.querySelector(".decrement");
     const quantityElement = buttonAdded.querySelector(".quantity");
 
    quantityElement.textContent = 1
-    handleCarts(products, quantityElement.textContent, buttonAdded);
+   
+    handleCarts(products, quantityElement.textContent, buttonAdded, productImg);
 
     // Remover cualquier evento previo para evitar duplicados
     incrementButton.replaceWith(incrementButton.cloneNode(true));
@@ -19,20 +20,21 @@ export const handleIncrementDecrement = (buttonAdded, button, products) => {
     function incrementEvent() {
         let quantity = parseInt(quantityElement.textContent, 10);
         quantityElement.textContent = quantity + 1; // Incrementar la cantidad
-        handleCarts(products, quantityElement.textContent, buttonAdded)
+        handleCarts(products, quantityElement.textContent, buttonAdded, productImg)
     }
 
     function decrementEvent() {
         let quantity = parseInt(quantityElement.textContent, 10);
         if (quantity > 1) {
             quantityElement.textContent = quantity - 1; // Decrementar la cantidad
-            handleCarts(products, quantityElement.textContent, buttonAdded)
+            handleCarts(products, quantityElement.textContent, buttonAdded, productImg)
         } else if (quantity === 1) {
             // Cuando la cantidad es 1 y se decrece, restablecemos los botones
             buttonAdded.style.display = "none";
             button.style.display = "flex";
             quantityElement.textContent = "1";
-            handleCarts(products, 0, buttonAdded)
+            productImg.style.border = "none"
+            handleCarts(products, 0, buttonAdded, productImg)
         }
     }
 

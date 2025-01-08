@@ -4,7 +4,8 @@ import { updateCartSummary } from "./updateCartSummary";
 
 
 let array = [];
-export const handleCarts = (products, quantityElement, buttonAdded) => {
+export const handleCarts = (products, quantityElement, buttonAdded, productImg) => {
+    
     if (!buttonAdded || !buttonAdded.id) {
         console.error("buttonAdded no es válido o no tiene un 'id'");
         return;
@@ -93,13 +94,14 @@ export const handleCarts = (products, quantityElement, buttonAdded) => {
             // Eliminar del DOM
             itemProduct.remove();
 
-
+            
             // Restaurar el botón de "add-to-cart"
             const addButton = document.querySelector(`.add-to-cart[id="${buttonAdded.id}"]`);
             const addedButton = document.querySelector(`.added[id="${buttonAdded.id}"]`);
             if (addButton && addedButton) {
                 addButton.style.display = "flex";
                 addedButton.style.display = "none";
+                productImg.style.border = "none"
             }
 
             // Actualizar el total y el título del carrito
