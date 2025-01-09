@@ -210,9 +210,10 @@ export const handleCarts = (products, quantityElement, buttonAdded, productImg) 
 
                 const buttonAddToCarts = document.querySelectorAll(".add-to-cart")
                 const buttonAdded = document.querySelectorAll(".added")
+                const allProductsImg = document.querySelectorAll(".product-img")
                 buttonAddToCarts.forEach(buttonAdd => buttonAdd.style.display = "flex")
                 buttonAdded.forEach(buttonAdded => buttonAdded.style.display = "none")
-
+                allProductsImg.forEach(oneProductImg => oneProductImg.style.border = "none")
                 // Actualizar el total del carrito
                 updateCartSummary();
 
